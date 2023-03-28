@@ -1494,13 +1494,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4473753903823713198}
+  - component: {fileID: 3883801740565227750}
   m_Layer: 0
   m_Name: LoginWnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4473753903823713198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1523,6 +1524,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3883801740565227750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4473753903823713199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 759fb3acd9296d9439c32c61e9ebaaf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnNotice: {fileID: 4473753903231213946}
+  btnEnter: {fileID: 4473753903026800975}
+  iptAcct: {fileID: 4473753901986510426}
+  iptPass: {fileID: 4473753902158789810}
 --- !u!1 &9087413648082384353
 GameObject:
   m_ObjectHideFlags: 0

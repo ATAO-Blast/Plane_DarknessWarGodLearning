@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<item ID="">
+		<mapName></mapName>
+		<sceneName></sceneName>
+		<mainCamPos></mainCamPos>
+		<mainCamRota></mainCamRota>
+		<playerBornPos></playerBornPos>
+		<playerBornRota></playerBornRota>
+	</item>
+	<item ID="">
+		<mapName></mapName>
+		<sceneName></sceneName>
+		<mainCamPos></mainCamPos>
+		<mainCamRota></mainCamRota>
+		<playerBornPos></playerBornPos>
+		<playerBornRota></playerBornRota>
+	</item>
+</root>
