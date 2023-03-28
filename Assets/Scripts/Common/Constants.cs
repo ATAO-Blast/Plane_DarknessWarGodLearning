@@ -4,8 +4,42 @@ using UnityEngine;
 
 namespace DarknessWarGodLearning
 {
+    public enum TxtColor
+    {
+        Red,
+        Green, 
+        Blue,
+        Yellow,
+    }
     public class Constants 
     {
+        private const string ColorRed = "<color=#FF0000FF>";
+        private const string ColorGreen = "<color=#00FF00FF>";
+        private const string ColorBlue = "<color=#00B4FFFF>";
+        private const string ColorYellow = "<color=#FFFF00FF>";
+        private const string ColorEnd = "</color>";
+
+        public static string Color(string str,TxtColor c)
+        {
+            string result = "";
+            switch (c)
+            {
+                case TxtColor.Red:
+                    result = ColorRed + str + ColorEnd;
+                    break;
+                case TxtColor.Blue:
+                    result = ColorBlue + str + ColorEnd;
+                    break;
+                case TxtColor.Green:
+                    result = ColorGreen + str + ColorEnd;
+                    break;
+                case TxtColor.Yellow:
+                    result = ColorYellow + str + ColorEnd;
+                    break;
+            }
+            return result;
+        }
+
         #region scenes
         public const int MainCityMapID = 10000;
         public const string SceneLogin = "SceneLogin";
@@ -22,6 +56,7 @@ namespace DarknessWarGodLearning
         public const string UIClickBtn = "uiClickBtn";
         public const string UIExtenBtn = "uiExtenBtn";
         public const string UIOpenPage = "uiOpenPage";
+        public const string FBItemEnter = "fbitem";
         #endregion
 
         #region Screen
@@ -40,5 +75,11 @@ namespace DarknessWarGodLearning
         //»ìºÏ²ÎÊý
         public const int BlendIdle = 0;
         public const int BlendWalk = 1;
+
+        //AutoGuideNPC
+        public const int NPCWiseMan = 0;
+        public const int NPCGeneral = 1;
+        public const int NPCArtisan = 2;
+        public const int NPCTrader = 3;
     }
 }

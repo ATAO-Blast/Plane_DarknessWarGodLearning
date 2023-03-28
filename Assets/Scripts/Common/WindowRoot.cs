@@ -13,11 +13,16 @@ namespace DarknessWarGodLearning
         protected ResSvc resSvc = null;
         protected AudioSvc audioSvc = null;
         protected NetSvc netSvc = null;
+        protected TimerSvc timerSvc = null;
         public void SetWndState(bool isActive = true)
         {
             if(gameObject.activeSelf != isActive) { SetActive(gameObject,isActive); }
             if(isActive ) { InitWnd(); }
             else { ClearWnd(); }
+        }
+        public bool GetWndState()
+        {
+            return gameObject.activeSelf;
         }
         /// <summary>
         /// 初始化来直接获取各种服务
@@ -27,12 +32,14 @@ namespace DarknessWarGodLearning
             resSvc = ResSvc.Instance;
             audioSvc = AudioSvc.Instance;
             netSvc = NetSvc.Instance;
+            timerSvc = TimerSvc.Instance;
         }
         protected virtual void ClearWnd()
         {
             resSvc = null;
             audioSvc = null;
             netSvc = null;
+            timerSvc = null;
         }
         #region SetTMPText
         protected void SetText(TextMeshProUGUI textMeshProUGUI, string content = "")
@@ -85,6 +92,15 @@ namespace DarknessWarGodLearning
         }
         #endregion
         #region Click Evts
+        /// <summary>
+        /// 给Image等组件添加OnPointerClick回调，注意回调的参数也是需要Listener指定的
+        /// </summary>
+        protected void OnPointerClick(GameObject go, UnityAction<object> evt,object args)
+        {
+            PEListener listener = GetOrAddComponent<PEListener>(go);
+            listener.onPointerClick = evt;
+            listener.args = args;
+        }
         protected void OnPointerDown(GameObject go,UnityAction<PointerEventData> evt)
         {
             PEListener listener = GetOrAddComponent<PEListener>(go);
@@ -101,5 +117,35 @@ namespace DarknessWarGodLearning
             listener.onPointerDrag = evt;
         }
         #endregion
+
+        #region SetSprite
+        protected void SetSprite(Image img,string path)
+        {
+            Sprite sprite = resSvc.LoadSprite(path, true);
+            img.sprite = sprite;
+        }
+        #endregion
+        protected Transform GetTrans(string name,Transform trans = null)
+        {
+            if (trans != null)
+            {
+                return trans.Find(name);
+            }
+            else
+            {
+                return transform.Find(name);
+            }
+        }
+        protected Transform GetTrans(string name, GameObject go = null)
+        {
+            if (go != null)
+            {
+                return go.transform.Find(name);
+            }
+            else
+            {
+                return transform.Find(name);
+            }
+        }
     }
 }

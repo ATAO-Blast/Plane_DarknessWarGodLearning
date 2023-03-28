@@ -9,7 +9,7 @@ namespace DarknessWarGodLearning
 {
     public class MainCityWnd : WindowRoot
     {
-        public Button btnUpFight, btnBuyPower, btnHead, btnGuide, btnCharge, btnVip, btnTask, btnArena, btnMKCoin, btnStrong, btnMenu;
+        public Button btnUpFight, btnBuyPower, btnHead, btnGuide, btnCharge, btnVip, btnTask, btnArena, btnMKCoin, btnStrong, btnMenu,btnChat;
         public TextMeshProUGUI txtFight, txtPower, txtLv, txtVip,txtName,txtExpPrg;
         public Image imgPowerPrg,imgTouch,imgDirBg,imgDirPoint;
         public Transform expPrgTrans;
@@ -19,6 +19,8 @@ namespace DarknessWarGodLearning
         private Vector2 startPos = Vector2.zero;
         private Vector2 defaultPos = Vector2.zero;
         private float pointDis;
+
+        private AutoGuideCfg curTaskData;
         protected override void InitWnd()
         {
             base.InitWnd();
@@ -27,10 +29,17 @@ namespace DarknessWarGodLearning
             SetActive(imgDirPoint, false);
             btnMenu.onClick.AddListener(PlayMenuButtonAnim);
             btnHead.onClick.AddListener(ClickHeadBtn);
+            btnGuide.onClick.AddListener(ClickGuideBtn);
+            btnStrong.onClick.AddListener(ClickStrongBtn);
+            btnChat.onClick.AddListener(ClickChatBtn);
+            btnBuyPower.onClick.AddListener(ClickBuyPowerBtn);
+            btnMKCoin.onClick.AddListener(ClickMKCoinBtn);
+            btnTask.onClick.AddListener(ClickTaskBtn);
+            btnArena.onClick.AddListener(ClickArenaBtn);
             RegisterTouchEvents();
             RefreshUI();
         }
-        private void RefreshUI()
+        public void RefreshUI()
         {
             PlayerData playerData = GameRoot.Instance.PlayerData;
             SetText(txtFight,PECommon.GetFightByProps(playerData));
@@ -39,9 +48,10 @@ namespace DarknessWarGodLearning
             SetText(txtLv,playerData.lv);
             SetText(txtName, playerData.name);
 
-            //expPrg
+            //经验值进度条
+            #region expPrg
             int expPrgVal = (int)((playerData.exp * 1.0f / PECommon.GetExpUpValByLv(playerData.lv)) * 100);
-            SetText(txtExpPrg,expPrgVal + "%");
+            SetText(txtExpPrg, expPrgVal + "%");
             int index = expPrgVal / 10;
 
             GridLayoutGroup grid = expPrgTrans.GetComponent<GridLayoutGroup>();
@@ -58,7 +68,7 @@ namespace DarknessWarGodLearning
                 {
                     image.fillAmount = 1;
                 }
-                else if(i == index)
+                else if (i == index)
                 {
                     image.fillAmount = expPrgVal % 10 * 1.0f / 10;
                 }
@@ -67,8 +77,45 @@ namespace DarknessWarGodLearning
                     image.fillAmount = 0;
                 }
             }
-            
+            #endregion
+
+            //设置自动任务图标
+            curTaskData = resSvc.GetAutoGuideCfg(playerData.guideid);
+            if(curTaskData != null)
+            {
+                SetGuideButton(curTaskData.npcID);
+            }
+            else
+            {
+                SetGuideButton(-1);
+            }
         }
+        private void SetGuideButton(int npcID)
+        {
+            string spPath = "";
+            Image img = btnGuide.GetComponent<Image>();
+            switch(npcID)
+            {
+
+                case Constants.NPCWiseMan:
+                    spPath = PathDefine.WiseManHead;
+                    break;
+                case Constants.NPCGeneral:
+                    spPath = PathDefine.GeneralHead;
+                    break;
+                case Constants.NPCArtisan:
+                    spPath = PathDefine.ArtisanHead;
+                    break;
+                case Constants.NPCTrader:
+                    spPath = PathDefine.TraderHead;
+                    break;
+                default:
+                    spPath = PathDefine.TaskHead;
+                    break;
+            }
+            SetSprite(img, spPath);
+        }
+        #region ButtonEvents
         private void PlayMenuButtonAnim()
         {
             audioSvc.PlayUIAudio(Constants.UIExtenBtn);
@@ -88,6 +135,48 @@ namespace DarknessWarGodLearning
         {
             audioSvc.PlayUIAudio(Constants.UIOpenPage);
             MainCitySys.Instance.OpenInfoWnd();
+        }
+        private void ClickStrongBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIOpenPage);
+            MainCitySys.Instance.OpenStrongWnd();
+        }
+        private void ClickGuideBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIClickBtn);
+            if(curTaskData !=  null)
+            {
+                MainCitySys.Instance.RunTask(curTaskData);
+            }
+            else
+            {
+                GameRoot.AddTips("More Guide Missions are under developing......");
+            }
+        }
+        private void ClickChatBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIClickBtn);
+            MainCitySys.Instance.OpenChatWnd();
+        }
+        private void ClickBuyPowerBtn()
+        {
+            audioSvc.PlayUIAudio (Constants.UIClickBtn);
+            MainCitySys.Instance.OpenBuyWnd(0);
+        }
+        private void ClickMKCoinBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIClickBtn);
+            MainCitySys.Instance.OpenBuyWnd(1);
+        }
+        private void ClickTaskBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIClickBtn);
+            MainCitySys.Instance.OpenTaskWnd();
+        }
+        private void ClickArenaBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIClickBtn);
+            MainCitySys.Instance.EnterFuben();
         }
         public void RegisterTouchEvents()
         {
@@ -119,10 +208,18 @@ namespace DarknessWarGodLearning
                 MainCitySys.Instance.SetMoveDir(dir.normalized);
             });
         }
+        #endregion
         private void OnDisable()
         {
             btnMenu.onClick.RemoveAllListeners();
             btnHead.onClick.RemoveAllListeners();
+            btnGuide.onClick.RemoveAllListeners();
+            btnStrong.onClick.RemoveAllListeners();
+            btnChat.onClick.RemoveAllListeners();
+            btnBuyPower.onClick.RemoveAllListeners();
+            btnMKCoin.onClick.RemoveAllListeners();
+            btnTask.onClick.RemoveAllListeners();
+            btnArena.onClick.RemoveAllListeners();
         }
     }
 }

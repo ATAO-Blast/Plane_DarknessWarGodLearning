@@ -94,6 +94,22 @@ namespace DarknessWarGodLearning
                         PECommon.Log("数据库更新异常",LogType.Error);
                         GameRoot.AddTips("Network instablilty");//不可以对客户端发送服务器内部错误
                         break;
+                    case ErrorCode.ServerDataError:
+                        PECommon.Log("服务器数据异常", LogType.Error);
+                        GameRoot.AddTips("Clinet Data InNormal");
+                        break;
+                    case ErrorCode.LackLevel:
+                        GameRoot.AddTips("Player Level Needed!");
+                        break;
+                    case ErrorCode.LackCoin:
+                        GameRoot.AddTips("Player Coin Needed!");
+                        break;
+                    case ErrorCode.LackCrystal:
+                        GameRoot.AddTips("Player Crystal Needed!");
+                        break;
+                    case ErrorCode.ClientDataError:
+                        GameRoot.AddTips("Client Data Error");
+                        break;
                 }
             }
             
@@ -104,6 +120,27 @@ namespace DarknessWarGodLearning
                     break;
                 case CMD.RspRename:
                     LoginSys.Instance.RspRename(msg);
+                    break;
+                case CMD.RspGuide:
+                    MainCitySys.Instance.RspGuide(msg);
+                    break;
+                case CMD.RspStrong:
+                    MainCitySys.Instance.RspStrong(msg);
+                    break;
+                case CMD.PshChat:
+                    MainCitySys.Instance.PushChat(msg);
+                    break;
+                case CMD.RspBuy:
+                    MainCitySys.Instance.RspBuy(msg);
+                    break;
+                case CMD.PshPower:
+                    MainCitySys.Instance.PshPower(msg);
+                    break;
+                case CMD.RspTaskReward:
+                    MainCitySys.Instance.RspTaskReward(msg);
+                    break;
+                case CMD.PshTaskPrgs:
+                    MainCitySys.Instance.PshTaskPrgs(msg);
                     break;
             }
             

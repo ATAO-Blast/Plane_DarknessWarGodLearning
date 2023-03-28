@@ -7,15 +7,23 @@ namespace DarknessWarGodLearning
 {
     public class InfoWnd : WindowRoot
     {
+        [Header("InfoWnd")]
         public RawImage charShow;
         public TextMeshProUGUI txtInfo,txtExpprg, txtPowerprg, txtJob, txtFight, txtHp, txtHurt, txtDef;
         public Button btnDetail,btnClose;
         public Image imgPowerprg, imgExpprg;
+
+        [Header("Detail")]
+        public Transform transDetail;
+        public Button btnCloseDetail;
+        public TextMeshProUGUI txtDetailHp, txtDetailHurt, txtDetailDef, txtDetailAp, txtDetailApdef, txtDetailDodge, txtDetailPierce, txtDetailCritical;
         protected override void InitWnd()
         {
             base.InitWnd();
             RefreshUI();
             btnClose.onClick.AddListener(ClickCloseBtn);
+            btnDetail.onClick.AddListener (ClickDetailBtn);
+            btnCloseDetail.onClick.AddListener(ClickDetailCloseBtn);
             RegTouchEvts();
         }
         private Vector2 startPos;
@@ -53,6 +61,14 @@ namespace DarknessWarGodLearning
             imgExpprg.fillAmount = expPrg;
 
             //Detail Todo
+            SetActive(transDetail, false);
+            SetText(txtDetailHp, pd.hp);
+            SetText(txtDetailAp, pd.ap);
+            SetText(txtDetailDef, pd.addef);
+            SetText(txtDetailApdef, pd.apdef);
+            SetText(txtDetailDodge, pd.dodge + "%");
+            SetText(txtDetailPierce, pd.pierce+"%");
+            SetText(txtDetailCritical, pd.critical+"%");
         }
         private void ClickCloseBtn()
         {
@@ -60,9 +76,22 @@ namespace DarknessWarGodLearning
             MainCitySys.Instance.CloseInfoWnd();
             SetWndState(false);
         }
+        private void ClickDetailBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIClickBtn);
+            SetActive(transDetail);
+            
+        }
+        private void ClickDetailCloseBtn()
+        {
+            audioSvc.PlayUIAudio(Constants.UIClickBtn);
+            SetActive(transDetail, false);
+        }
         private void OnDisable()
         {
             btnClose.onClick.RemoveAllListeners();
+            btnDetail.onClick.RemoveAllListeners();
+            btnCloseDetail.onClick.RemoveAllListeners();
         }
     }
 }

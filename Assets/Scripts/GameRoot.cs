@@ -30,11 +30,14 @@ namespace DarknessWarGodLearning
 
         private void Init()
         {
+            Application.targetFrameRate = 60;
             //服务模块初始化
             NetSvc netSvc = GetComponent<NetSvc>();
             netSvc.InitSvc();
             ResSvc resSvc = GetComponent<ResSvc>();
             resSvc.InitSvc();
+            TimerSvc timerSvc = GetComponent<TimerSvc>();
+            timerSvc.InitSvc();
 
             AudioSvc audioSvc = GetComponent<AudioSvc>();
             audioSvc.InitSvc();
@@ -44,6 +47,8 @@ namespace DarknessWarGodLearning
             loginSys.InitSys();
             MainCitySys mainCitySys = GetComponent<MainCitySys>();
             mainCitySys.InitSys();
+            FubenSys fubenSys = GetComponent<FubenSys>();
+            fubenSys.InitSys();
 
             //进入登录场景并加载相应UI
             loginSys.EnterLogin();
@@ -63,6 +68,52 @@ namespace DarknessWarGodLearning
         public void SetPalyerName(string name)
         {
             playerData.name = name;
+        }
+        public void SetPalyerDataByGuide(RspGuide data)
+        {
+            playerData.lv = data.lv;
+            playerData.exp = data.exp;
+            playerData.coin = data.coin;
+            playerData.guideid = data.guideid;
+        }
+        public void SetPlayerDataByStrong(RspStrong strongData)
+        {
+            playerData.ad = strongData.ad;
+            playerData.ap = strongData.ap;
+            playerData.addef = strongData.addef;
+            playerData.apdef = strongData.apdef;
+            playerData.crystal = strongData.crystal;
+            playerData.coin = strongData.coin;
+
+            playerData.strongArr = strongData.strongArr;
+        }
+        public void SetPlayerDataByBuy(RspBuy rspBuy)
+        {
+            playerData.diamond = rspBuy.diamond;
+            switch(rspBuy.buytype)
+            {
+                case 0:
+                    playerData.power = rspBuy.power;
+                    break;
+                case 1:
+                    playerData.coin = rspBuy.coin;
+                    break;
+            }
+        }
+        public void SetPlayerDataByPower(PshPower pshPower)
+        {
+            playerData.power = pshPower.power;
+        }
+        public void SetPlayerDataByTask(RspTaskReward taskReward)
+        {
+            playerData.exp = taskReward.exp;
+            playerData.lv = taskReward.lv;
+            playerData.coin = taskReward.cion;
+            playerData.taskArr = taskReward.taskArr;
+        }
+        public void SetPlayerTaskPrgs(PshTaskPrgs pshTaskPrgs)
+        {
+            playerData.taskArr = pshTaskPrgs.taskArr;
         }
     }
 }

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<item ID="">
+		<npcID></npcID>
+		<dilogArr></dilogArr>
+		<actID></actID>
+		<coin></coin>
+		<exp></exp>
+		<nextID></nextID>
+	</item>
+	<item ID="">
+		<npcID></npcID>
+		<dilogArr></dilogArr>
+		<actID></actID>
+		<coin></coin>
+		<exp></exp>
+		<nextID></nextID>
+	</item>
+</root>

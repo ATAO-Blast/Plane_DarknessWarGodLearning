@@ -80,14 +80,14 @@ namespace DarknessWarGodLearning
         {
             characterController.Move(transform.forward * Time.deltaTime * Constants.PlayerMoveSpeed);
         }
-        private void SetCam()
+        public void SetCam()
         {
             if (camTrans != null)
             {
                 camTrans.position = transform.position - camOffset;
             }
         }
-        public void SetBlend(float blend)
+        public void SetAnimTreeBlend(float blend)
         {
             targetBlend = blend;
         }
